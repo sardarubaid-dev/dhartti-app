@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "234324224781",
+    "project_id": "dhartti",
+    "storage_bucket": "dhartti.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234324224781:android:d9090bcd15d32a8a129e44",
+        "android_client_info": {
+          "package_name": "com.example.dhartti"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBjCV6IWyrv6IVyOjzbzZ_-VKGyzqC0pQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
