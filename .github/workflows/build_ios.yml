@@ -1,0 +1,50 @@
+name: Build iOS IPA for Testing
+
+on:
+  workflow_dispatch: # Allows manual trigger from GitHub UI with a single button click
+
+jobs:
+  build-ios:
+    name: Build Dhartti iOS (.ipa)
+    runs-on: macos-14 # Apple Silicon (M1/M2) fast official Mac runner
+
+    steps:
+      - name: 1. Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 2. Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: 3. Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.29.0'
+          channel: 'stable'
+          cache: true
+
+      - name: 4. Install Dependencies
+        run: |
+          flutter pub get
+          cd ios
+          pod install
+
+      - name: 5. Build iOS App (Unsigned for Testing)
+        run: |
+          flutter build ios --release --no-codesign
+
+      - name: 6. Package App into .ipa
+        run: |
+          mkdir -p Payload
+          cp -r build/ios/iphoneos/Runner.app Payload/
+          zip -r Dhartti.ipa Payload
+          rm -rf Payload
+
+      - name: 7. Upload Dhartti.ipa Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Dhartti-iOS-IPA
+          path: Dhartti.ipa
+          retention-days: 7
